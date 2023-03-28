@@ -11,7 +11,7 @@ const randomItem = (array) => array[Math.floor(Math.random() * array.length)];
 (async function seedDb() {
 	await Campground.deleteMany({});
 
-	for (let i = 0; i < 10; i++) {
+	for (let i = 0; i < 50; i++) {
 		const randomIndex = Math.floor(Math.random() * cities.length);
 
 		await new Campground({
