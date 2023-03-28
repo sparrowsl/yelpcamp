@@ -2,7 +2,7 @@
 <a href="/">back home</a>
 
 <ul>
-	<% campgrounds.forEach(campground => { %>
-	<li><%= campground.title %></li>
-	<% }); %>
+	<% for (const campground of campgrounds) {%>
+	<li><a href="/campgrounds/<%= campground._id %>"><%= campground.title %></a></li>
+	<%} %>
 </ul>
