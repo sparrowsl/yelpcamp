@@ -1,22 +1,22 @@
-import mongoose from "mongoose";
-
-import Campground from "../models/campground.js";
+import prisma from "../utils/prisma.js";
 import cities from "./cities.js";
 import { descriptors, places } from "./helpers.js";
 
-mongoose.connect("mongodb://localhost/yelpcamp").then(console.log("Connected..."));
-
-const randomItem = (array) => array[Math.floor(Math.random() * array.length)];
+const randomItem = (/** @type {string[]} */ array) => array[Math.floor(Math.random() * array.length)];
 
 (async function seedDb() {
-	await Campground.deleteMany({});
+	await prisma.campground.deleteMany({});
 
 	for (let i = 0; i < 50; i++) {
 		const randomIndex = Math.floor(Math.random() * cities.length);
 
-		await new Campground({
-			location: `${cities[randomIndex].city} ${cities[randomIndex].state}`,
-			title: `${randomItem(descriptors)} ${randomItem(places)}`,
-		}).save();
+		await prisma.campground.create({
+			data: {
+				description: "",
+				price: 0,
+				location: `${cities[randomIndex].city} ${cities[randomIndex].state}`,
+				title: `${randomItem(descriptors)} ${randomItem(places)}`,
+			},
+		});
 	}
-})().then(() => mongoose.connection.close());
+})().then(() => prisma.$disconnect());

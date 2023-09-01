@@ -1,26 +1,30 @@
 {
-  "name": "yelpcamp",
-  "version": "0.0.1",
-  "description": "",
-  "main": "app.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/sparrowsl/yelpcamp.git"
-  },
-  "author": "",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/sparrowsl/yelpcamp/issues"
-  },
-  "homepage": "https://github.com/sparrowsl/yelpcamp#readme",
-  "dependencies": {
-    "ejs": "^3.1.9",
-    "express": "^4.18.2",
-    "express-ejs-layouts": "^2.5.1",
-    "mongoose": "^7.1.0"
-  },
-  "type": "module"
+	"name": "yelpcamp",
+	"version": "0.0.1",
+	"description": "",
+	"main": "app.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"generate": "drizzle-kit generate:sqlite"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/sparrowsl/yelpcamp.git"
+	},
+	"author": "",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/sparrowsl/yelpcamp/issues"
+	},
+	"homepage": "https://github.com/sparrowsl/yelpcamp#readme",
+	"dependencies": {
+		"@prisma/client": "^5.2.0",
+		"ejs": "^3.1.9",
+		"express": "^4.18.2",
+		"express-ejs-layouts": "^2.5.1"
+	},
+	"type": "module",
+	"devDependencies": {
+		"prisma": "^5.2.0"
+	}
 }
