@@ -1,15 +1,40 @@
+<script>
+	import { goto } from "$app/navigation";
+	import { PUBLIC_BASE_API } from "$env/static/public";
+
+	const campground = {
+		title: "",
+		location: "",
+		description: "",
+		price: 0,
+	};
+
+	async function createCampground() {
+		const res = await fetch(`${PUBLIC_BASE_API}/campgrounds`, {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify(campground),
+		});
+		if (!res.ok) return;
+
+		// prettier-ignore
+		const {data: { campground:camp }} = await res.json();
+		goto(`/campgrounds/${camp.id}`);
+	}
+</script>
+
 <h1>New Campground</h1>
 <a href="/">back home</a>
 
-<form action="" method="POST">
+<form action="" method="POST" on:submit|preventDefault={createCampground}>
 	<div>
 		<label for="title">Title</label>
-		<input type="text" id="title" name="campground[title]" />
+		<input type="text" id="title" name="title" required bind:value={campground.title} />
 	</div>
 
 	<div>
 		<label for="location">Location</label>
-		<input type="text" id="location" name="campground[location]" />
+		<input type="text" id="location" name="location" required bind:value={campground.location} />
 	</div>
 
 	<button type="submit">Add Campground</button>
