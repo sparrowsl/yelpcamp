@@ -1,8 +1,9 @@
-import prisma from "../utils/prisma.js";
+import prisma from "../prisma/prisma.js";
 import cities from "./cities.js";
 import { descriptors, places } from "./helpers.js";
 
-const randomItem = (/** @type {string[]} */ array) => array[Math.floor(Math.random() * array.length)];
+const randomItem = (/** @type {string[]} */ array) =>
+	array[Math.floor(Math.random() * array.length)];
 
 (async function seedDb() {
 	await prisma.campground.deleteMany({});

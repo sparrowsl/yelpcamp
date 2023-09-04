@@ -1,5 +1,5 @@
-<h1>Yelp Camp Fixed</h1>
-
+<h1>YelpCamp</h1>
 <a href="/campgrounds">View Campgrounds</a>
-<br>
+<br />
+<br />
 <a href="/campgrounds/new">New Campground</a>
