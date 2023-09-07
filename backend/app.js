@@ -44,4 +44,16 @@ app.post("/api/v1/campgrounds", async (req, res) => {
 	return res.status(201).json({ status: "success", data: { campground } });
 });
 
+app.patch("/api/v1/campgrounds/:id", async (req, res) => {
+	const { title, location } = req.body;
+	// const campground = await prisma.campground.update({
+	// 	data: { location, title, price: 0, description: "" },
+	// 	where: { id: req.params.id },
+	// });
+	console.log(req.params.id);
+	console.log(req.body);
+
+	return res.status(200).json({ status: "success", data: { campground: {} } });
+});
+
 app.listen(port, () => console.log(`Serving on http://localhost:${port}`));

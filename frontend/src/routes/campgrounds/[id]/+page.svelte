@@ -5,6 +5,7 @@
 </script>
 
 <a href="/campgrounds">view campgrounds...</a>
+<a href="/campgrounds/{campground.id}/edit">edit campground</a>
 
 <section>
 	<h1>{campground.title}</h1>
