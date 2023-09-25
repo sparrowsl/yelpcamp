@@ -4,17 +4,18 @@
 
 - [Express](https://expressjs.com) - JavaScript Backend framework
 - [SvelteKit](https://kit.svelte.dev) - JavaScript Meta framework
-- [TailwindCSS](https://tailwindcss.com) - CSS framework
+- [UnoCSS](https://unocss.dev) - CSS framework
 - [Prisma](https://prisma.io) - Database ORM
 
 ## Prerequisites
 
 What things you need to install the software
 
-- Node 16.0.0 and above
+- Node 18+ and above
 - Experience using:
   - HTML, CSS
   - JavaScript
+  - Express
   - TailwindCSS
   - Svelte (useful but optional)
 
