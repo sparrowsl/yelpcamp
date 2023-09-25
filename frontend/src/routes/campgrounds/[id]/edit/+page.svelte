@@ -7,17 +7,14 @@
 	const { campground } = data;
 
 	async function updateCampground() {
-		const res = await fetch(`${PUBLIC_BASE_API}/campgrounds`, {
+		const res = await fetch(`${PUBLIC_BASE_API}/campgrounds/${campground.id}`, {
 			method: "PATCH",
-			headers: { "Content-Type": "application/json" },
+			headers: { "Content-Type": "application/json;charset=utf-8" },
 			body: JSON.stringify(campground),
 		});
-		// if (!res.ok) return;
+		if (!res.ok) return;
 
-		// prettier-ignore
-		const {data: { campgrounds: camp }} = await res.json();
-		console.log(camp);
-		// goto(`/campgrounds/${camp.id}`);
+		goto(`/campgrounds/${campground.id}`);
 	}
 </script>
 

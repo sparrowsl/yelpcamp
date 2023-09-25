@@ -5,7 +5,7 @@ import prisma from "./prisma/prisma.js";
 const app = express();
 const port = process.env.PORT || 3000;
 
-app.set("view engine", "ejs");
+// app.set("view engine", "ejs");
 
 app.use(express.json());
 app.use(cors({ origin: "*" }));
@@ -46,14 +46,12 @@ app.post("/api/v1/campgrounds", async (req, res) => {
 
 app.patch("/api/v1/campgrounds/:id", async (req, res) => {
 	const { title, location } = req.body;
-	// const campground = await prisma.campground.update({
-	// 	data: { location, title, price: 0, description: "" },
-	// 	where: { id: req.params.id },
-	// });
-	console.log(req.params.id);
-	console.log(req.body);
+	const campground = await prisma.campground.update({
+		data: { location, title },
+		where: { id: req.params.id },
+	});
 
-	return res.status(200).json({ status: "success", data: { campground: {} } });
+	return res.status(200).json({ status: "success", data: { campground } });
 });
 
 app.listen(port, () => console.log(`Serving on http://localhost:${port}`));
