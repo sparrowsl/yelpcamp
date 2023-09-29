@@ -1,4 +1,4 @@
-<header class="bg-gray-700 text-white">
+<div class="bg-gray-700 text-white">
 	<nav class="container flex items-center justify-between font-roboto py-3">
 		<a href="/" class="block text-2xl font-bold">YelpCamp</a>
 
@@ -9,4 +9,4 @@
 			<li><a href="/">Home</a></li>
 		</ul>
 	</nav>
-</header>
+</div>

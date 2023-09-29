@@ -11,11 +11,12 @@ datasource db {
 }
 
 model Campground {
-  id          String @unique @default(cuid())
+  id          String  @unique @default(cuid())
   title       String
+  location    String
+  image       String?
   price       Int
   description String
-  location    String
 
   @@map("campgrounds")
 }

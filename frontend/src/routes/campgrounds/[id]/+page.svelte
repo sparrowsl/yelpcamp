@@ -9,6 +9,8 @@
 <section>
 	<h1 class="font-bold text-3xl">{campground.title}</h1>
 	<p class="text-xl">{campground.location}</p>
+	<img src={campground.image} alt={campground.title} />
+	<p>{campground.description}</p>
 
 	<a href="/campgrounds/{campground.id}/edit">Edit campground</a>
 	<br />

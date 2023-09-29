@@ -13,10 +13,11 @@ const randomItem = (/** @type {string[]} */ array) =>
 
 		await prisma.campground.create({
 			data: {
-				description: "",
-				price: 0,
+				description: `Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nam voluptatum dicta laborum distinctio ab, sequi velit delectus quod porro quae.`,
+				price: Math.floor(Math.random() * 30) + 10,
 				location: `${cities[randomIndex].city} ${cities[randomIndex].state}`,
 				title: `${randomItem(descriptors)} ${randomItem(places)}`,
+				image: "https://source.unsplash.com/random/?campground",
 			},
 		});
 	}
