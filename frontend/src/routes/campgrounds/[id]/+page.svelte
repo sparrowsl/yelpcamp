@@ -1,14 +1,19 @@
 <script>
+	import Button from "$lib/components/Button.svelte";
+
 	/** @type {import("./$types").PageData} */
 	export let data;
 	const { campground } = data;
 </script>
 
-<a href="/campgrounds">view campgrounds...</a>
-<a href="/campgrounds/{campground.id}/edit">edit campground</a>
-<a href="/campgrounds/{campground.id}/delete">delete campground</a>
-
 <section>
-	<h1>{campground.title}</h1>
-	<p>{campground.location}</p>
+	<h1 class="font-bold text-3xl">{campground.title}</h1>
+	<p class="text-xl">{campground.location}</p>
+
+	<a href="/campgrounds/{campground.id}/edit">Edit campground</a>
+	<br />
+	<form action="/campgrounds/{campground.id}/delete" method="POST">
+		<Button>Delete Campground</Button>
+	</form>
+	<a href="/campgrounds">All Campgrounds</a>
 </section>

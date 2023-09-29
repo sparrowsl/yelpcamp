@@ -1,13 +1,10 @@
 <script>
 	import { goto } from "$app/navigation";
 	import { PUBLIC_BASE_API } from "$env/static/public";
+	import FormInput from "$lib/components/FormInput.svelte";
+	import Button from "$lib/components/Button.svelte";
 
-	const campground = {
-		title: "",
-		location: "",
-		description: "",
-		price: 0,
-	};
+	const campground = { title: "", location: "", description: "", price: 0 };
 
 	async function createCampground() {
 		const res = await fetch(`${PUBLIC_BASE_API}/campgrounds`, {
@@ -18,7 +15,7 @@
 		if (!res.ok) return;
 
 		// prettier-ignore
-		const {data: { campground:camp }} = await res.json();
+		const { data: { campground: camp } } = await res.json();
 		goto(`/campgrounds/${camp.id}`);
 	}
 </script>
@@ -27,15 +24,8 @@
 <a href="/">back home</a>
 
 <form action="" method="POST" on:submit|preventDefault={createCampground}>
-	<div>
-		<label for="title">Title</label>
-		<input type="text" id="title" name="title" required bind:value={campground.title} />
-	</div>
+	<FormInput label="Title" id="title" name="title" bind:value={campground.title} />
+	<FormInput label="Location" id="location" name="location" bind:value={campground.location} />
 
-	<div>
-		<label for="location">Location</label>
-		<input type="text" id="location" name="location" required bind:value={campground.location} />
-	</div>
-
-	<button type="submit">Add Campground</button>
+	<Button>Add Campground</Button>
 </form>

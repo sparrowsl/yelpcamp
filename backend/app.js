@@ -36,6 +36,7 @@ app.post("/api/v1/campgrounds", async (req, res) => {
 
 app.patch("/api/v1/campgrounds/:id", async (req, res) => {
 	const { title, location } = req.body;
+
 	const campground = await prisma.campground.update({
 		data: { location, title },
 		where: { id: req.params.id },

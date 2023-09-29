@@ -1,5 +1,8 @@
-<svelte:head>
-	<title>YelpCamp</title>
-</svelte:head>
+<script>
+	import "@unocss/reset/tailwind.css";
+	import "uno.css";
+</script>
 
-<slot />
+<main class="container font-roboto">
+	<slot />
+</main>
