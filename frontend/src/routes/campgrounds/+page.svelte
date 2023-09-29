@@ -3,11 +3,13 @@
 	export let data;
 </script>
 
-<h1>All Campgrounds...</h1>
-<a href="/">back home</a>
+<h1 class="text-3xl font-bold">All Campgrounds...</h1>
+<a href="/campgrounds/new" class="text-blue underline mb-2 block">Add Campground</a>
 
-<ul>
+<ul class="list-disc list-inside pl-4">
 	{#each data.campgrounds as campground}
-		<li><a href="/campgrounds/{campground.id}">{campground.title}</a></li>
+		<li>
+			<a class="underline text-blue-500" href="/campgrounds/{campground.id}">{campground.title}</a>
+		</li>
 	{/each}
 </ul>

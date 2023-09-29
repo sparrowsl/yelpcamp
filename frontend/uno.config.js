@@ -31,7 +31,7 @@ export default defineConfig({
 	],
 	extractors: [extractorSvelte()],
 	transformers: [transformerVariantGroup()],
-	shortcuts: { container: "container max-w-6xl mx-auto" },
+	shortcuts: { container: "max-w-6xl mx-auto" },
 	theme: {
 		colors: {
 			brand: {

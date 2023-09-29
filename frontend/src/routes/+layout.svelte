@@ -1,8 +1,10 @@
 <script>
 	import "@unocss/reset/tailwind.css";
 	import "uno.css";
+	import Navbar from "./Navbar.svelte";
 </script>
 
-<main class="container font-roboto">
+<Navbar />
+<main class="container font-roboto mt-5">
 	<slot />
 </main>
