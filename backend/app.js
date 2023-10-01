@@ -22,6 +22,8 @@ app.get("/api/v1/campgrounds/:id", async (req, res) => {
 		where: { id: req.params.id },
 	});
 
+	if (!campground) return res.status(404).json({ message: "Campground not found!!" });
+
 	return res.status(200).json({ status: "success", data: { campground } });
 });
 

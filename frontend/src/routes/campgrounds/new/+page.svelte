@@ -3,6 +3,7 @@
 	import { PUBLIC_BASE_API } from "$env/static/public";
 	import FormInput from "$lib/components/FormInput.svelte";
 	import Button from "$lib/components/Button.svelte";
+	import Textarea from "$lib/components/Textarea.svelte";
 
 	const campground = { title: "", location: "", image: "", description: "", price: undefined };
 
@@ -42,15 +43,12 @@
 				bind:value={campground.image}
 			/>
 
-			<label for="description">
-				<span>Description</span>
-				<textarea
-					name="description"
-					id="description"
-					class="rounded block w-full min-h-10 max-h-50 text-sm"
-					bind:value={campground.description}
-				></textarea>
-			</label>
+			<Textarea
+				label="Description"
+				name="description"
+				id="description"
+				bind:value={campground.description}
+			/>
 
 			<Button class="w-fit">Add Campground</Button>
 		</fieldset>

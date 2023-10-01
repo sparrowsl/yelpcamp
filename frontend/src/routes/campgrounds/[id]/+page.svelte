@@ -35,5 +35,5 @@
 		</figcaption>
 	</figure>
 
-	<a href="/campgrounds">All Campgrounds</a>
+	<!-- <a href="/campgrounds">All Campgrounds</a> -->
 </section>
