@@ -13,7 +13,7 @@
 				src={campground.image}
 				alt={campground.title}
 				loading="lazy"
-				class="w-70 h-45 object-contain"
+				class="w-50 h-40 object-cover object-center"
 			/>
 
 			<figcaption>

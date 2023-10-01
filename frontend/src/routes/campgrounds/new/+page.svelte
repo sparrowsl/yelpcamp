@@ -4,7 +4,7 @@
 	import FormInput from "$lib/components/FormInput.svelte";
 	import Button from "$lib/components/Button.svelte";
 
-	const campground = { title: "", location: "", description: "", price: 0 };
+	const campground = { title: "", location: "", image: "", description: "", price: undefined };
 
 	async function createCampground() {
 		const res = await fetch(`${PUBLIC_BASE_API}/campgrounds`, {
@@ -20,12 +20,41 @@
 	}
 </script>
 
-<h1>New Campground</h1>
-<a href="/">back home</a>
+<section class="max-w-2xl mx-auto">
+	<h1 class="text-3xl font-bold text-center">New Campground</h1>
 
-<form action="" method="POST" on:submit|preventDefault={createCampground}>
-	<FormInput label="Title" id="title" name="title" bind:value={campground.title} />
-	<FormInput label="Location" id="location" name="location" bind:value={campground.location} />
+	<form action="" method="POST" on:submit|preventDefault={createCampground} class="">
+		<fieldset class="grid gap-4">
+			<FormInput label="Title" id="title" name="title" bind:value={campground.title} />
+			<FormInput label="Location" id="location" name="location" bind:value={campground.location} />
+			<FormInput
+				type="number"
+				label="Price"
+				id="price"
+				name="price"
+				bind:value={campground.price}
+			/>
+			<FormInput
+				type="url"
+				label="Image URL"
+				id="image"
+				name="image"
+				bind:value={campground.image}
+			/>
 
-	<Button>Add Campground</Button>
-</form>
+			<label for="description">
+				<span>Description</span>
+				<textarea
+					name="description"
+					id="description"
+					class="rounded block w-full min-h-10 max-h-50 text-sm"
+					bind:value={campground.description}
+				></textarea>
+			</label>
+
+			<Button class="w-fit">Add Campground</Button>
+		</fieldset>
+
+		<a href="/campgrounds" class="block mt-3 text-blue-500 underline">all campgrounds</a>
+	</form>
+</section>

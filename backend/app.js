@@ -26,19 +26,19 @@ app.get("/api/v1/campgrounds/:id", async (req, res) => {
 });
 
 app.post("/api/v1/campgrounds", async (req, res) => {
-	const { title, location } = req.body;
+	const { title, location, price, description, image } = req.body;
 	const campground = await prisma.campground.create({
-		data: { location, title, price: 0, description: "" },
+		data: { location, title, price: Number(price), description, image },
 	});
 
 	return res.status(201).json({ status: "success", data: { campground } });
 });
 
 app.patch("/api/v1/campgrounds/:id", async (req, res) => {
-	const { title, location } = req.body;
+	const { title, location, price, description, image } = req.body;
 
 	const campground = await prisma.campground.update({
-		data: { location, title },
+		data: { title, location, price: Number(price), description, image },
 		where: { id: req.params.id },
 	});
 
