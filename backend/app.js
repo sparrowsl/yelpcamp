@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors";
+import { z } from "zod";
 import prisma from "./prisma/prisma.js";
 
 const app = express();
@@ -27,20 +28,35 @@ app.get("/api/v1/campgrounds/:id", async (req, res) => {
 	return res.status(200).json({ status: "success", data: { campground } });
 });
 
-app.post("/api/v1/campgrounds", async (req, res) => {
-	const { title, location, price, description, image } = req.body;
-	const campground = await prisma.campground.create({
-		data: { location, title, price: Number(price), description, image },
+const validateCampground = (req, res, next) => {
+	const campgroundSchema = z.object({
+		title: z.string().min(1).trim(),
+		location: z.string().min(1).trim(),
+		price: z.number({ coerce: true }).min(1, { message: "Price must be greater than 0!!" }),
+		description: z.string().min(1).trim(),
+		image: z.string().min(1).trim(),
 	});
+
+	try {
+		req.body = campgroundSchema.parse(req.body);
+	} catch (e) {
+		const { fieldErrors: errors } = e.flatten();
+		// return first error for each errors array
+		return res.status(400).json({ message: Object.values(errors).map((err) => err[0])[0] });
+	}
+
+	next();
+};
+
+app.post("/api/v1/campgrounds", validateCampground, async (req, res) => {
+	const campground = await prisma.campground.create({ data: req.body });
 
 	return res.status(201).json({ status: "success", data: { campground } });
 });
 
-app.patch("/api/v1/campgrounds/:id", async (req, res) => {
-	const { title, location, price, description, image } = req.body;
-
+app.patch("/api/v1/campgrounds/:id", validateCampground, async (req, res) => {
 	const campground = await prisma.campground.update({
-		data: { title, location, price: Number(price), description, image },
+		data: req.body,
 		where: { id: req.params.id },
 	});
 
