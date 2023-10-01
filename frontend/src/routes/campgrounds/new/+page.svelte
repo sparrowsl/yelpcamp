@@ -16,8 +16,8 @@
 		if (!res.ok) return;
 
 		// prettier-ignore
-		// const { data: { campground: camp } } = await res.json();
-		// goto(`/campgrounds/${camp.id}`);
+		const { data: { campground: camp } } = await res.json();
+		goto(`/campgrounds/${camp.id}`);
 	}
 </script>
 
