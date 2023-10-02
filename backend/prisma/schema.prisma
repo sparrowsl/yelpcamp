@@ -10,6 +10,30 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id      String    @unique @default(cuid())
+  first   String
+  last    String
+  address Address[]
+
+  @@index([id])
+  @@map("users")
+}
+
+model Address {
+  id      String  @unique @default(cuid())
+  city    String
+  state   String?
+  country String
+  street  String?
+
+  user    User?   @relation(fields: [user_id], references: [id])
+  user_id String?
+
+  @@index([id, city])
+  @@map("addresses")
+}
+
 model Campground {
   id          String  @unique @default(cuid())
   title       String
@@ -18,5 +42,6 @@ model Campground {
   price       Int
   description String
 
+  @@index([id])
   @@map("campgrounds")
 }
