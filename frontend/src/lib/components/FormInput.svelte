@@ -6,7 +6,10 @@
 	export let label = "";
 	export let required = true;
 	export let value = "";
+	/** @type {number|string} */
 	export let min = 0;
+	/** @type {number|string} */
+	export let max = "";
 </script>
 
 <label for={id || name} class="block">
@@ -15,6 +18,7 @@
 		{type}
 		{name}
 		{min}
+		{max}
 		id={id || name}
 		{placeholder}
 		{required}

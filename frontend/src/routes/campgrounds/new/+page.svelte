@@ -24,7 +24,7 @@
 <section class="max-w-2xl mx-auto">
 	<h1 class="text-3xl font-bold text-center">New Campground</h1>
 
-	<form action="" method="POST" on:submit|preventDefault={createCampground} class="" novalidate>
+	<form action="" method="POST" on:submit|preventDefault={createCampground} class="">
 		<fieldset class="grid gap-4">
 			<FormInput label="Title" id="title" name="title" bind:value={campground.title} />
 			<FormInput label="Location" id="location" name="location" bind:value={campground.location} />

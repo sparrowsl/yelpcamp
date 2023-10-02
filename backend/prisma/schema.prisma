@@ -35,13 +35,25 @@ model Address {
 }
 
 model Campground {
-  id          String  @unique @default(cuid())
+  id          String   @unique @default(cuid())
   title       String
   location    String
   image       String?
   price       Int
   description String
+  reviews     Review[]
 
   @@index([id])
   @@map("campgrounds")
+}
+
+model Review {
+  id            String      @unique @default(cuid())
+  body          String
+  rating        Int
+  campground    Campground? @relation(fields: [campground_id], references: [id])
+  campground_id String?
+
+  @@index([id, rating])
+  @@map("reviews")
 }

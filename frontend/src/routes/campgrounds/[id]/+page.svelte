@@ -1,13 +1,21 @@
 <script>
 	import Button from "$lib/components/Button.svelte";
+	import FormInput from "$lib/components/FormInput.svelte";
+	import Textarea from "$lib/components/Textarea.svelte";
 
 	/** @type {import("./$types").PageData} */
 	export let data;
 	const { campground } = data;
+
+	const review = { rating: "", body: "" };
+
+	const submitReview = async () => {
+		console.log(review);
+	};
 </script>
 
-<section>
-	<figure class="max-w-2xl mx-auto">
+<article class="max-w-5xl mx-auto grid grid-cols-2 gap-10">
+	<figure class="">
 		<img
 			src={campground.image}
 			alt={campground.title}
@@ -35,5 +43,21 @@
 		</figcaption>
 	</figure>
 
+	<form action="" method="POST" class="" on:submit|preventDefault={submitReview}>
+		<fieldset class="grid gap-4">
+			<FormInput
+				label="Rating"
+				type="range"
+				name="rating"
+				min="1"
+				max="5"
+				bind:value={review.rating}
+			/>
+			<Textarea label="Review" name="body" class="text-gray-600" bind:value={review.body} />
+
+			<Button class="w-fit bg-teal-700">Submit Review</Button>
+		</fieldset>
+	</form>
+
 	<!-- <a href="/campgrounds">All Campgrounds</a> -->
-</section>
+</article>
