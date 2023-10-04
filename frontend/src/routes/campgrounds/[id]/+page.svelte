@@ -1,16 +1,24 @@
 <script>
+	import { page } from "$app/stores";
+	import { PUBLIC_BASE_API } from "$env/static/public";
 	import Button from "$lib/components/Button.svelte";
 	import FormInput from "$lib/components/FormInput.svelte";
 	import Textarea from "$lib/components/Textarea.svelte";
 
 	/** @type {import("./$types").PageData} */
 	export let data;
-	const { campground } = data;
+	const { campground, reviews: campReviews } = data;
 
-	const review = { rating: "", body: "" };
+	const review = { rating: 3, body: "" };
 
 	const submitReview = async () => {
-		console.log(review);
+		const res = await fetch(`${PUBLIC_BASE_API}/campgrounds/${campground.id}/reviews`, {
+			method: "POST",
+			headers: { "Content-Type": "application/json;charset=utf-8" },
+			body: JSON.stringify(review),
+		});
+
+		if (res.ok) window.location.href = $page.url.pathname;
 	};
 </script>
 
@@ -43,21 +51,32 @@
 		</figcaption>
 	</figure>
 
-	<form action="" method="POST" class="" on:submit|preventDefault={submitReview}>
-		<fieldset class="grid gap-4">
-			<FormInput
-				label="Rating"
-				type="range"
-				name="rating"
-				min="1"
-				max="5"
-				bind:value={review.rating}
-			/>
-			<Textarea label="Review" name="body" class="text-gray-600" bind:value={review.body} />
+	<section>
+		<form action="" method="POST" on:submit|preventDefault={submitReview}>
+			<fieldset class="grid gap-4">
+				<FormInput
+					label="Rating"
+					type="range"
+					name="rating"
+					min="1"
+					max="5"
+					bind:value={review.rating}
+				/>
+				<Textarea label="Review" name="body" class="text-gray-600" bind:value={review.body} />
 
-			<Button class="w-fit bg-teal-700">Submit Review</Button>
-		</fieldset>
-	</form>
+				<Button class="w-fit bg-teal-700">Submit Review</Button>
+			</fieldset>
+		</form>
 
+		{#if campReviews}
+			<ul>
+				{#await campReviews then reviews}
+					{#each reviews as review}
+						<li>{review.body}</li>
+					{/each}
+				{/await}
+			</ul>
+		{/if}
+	</section>
 	<!-- <a href="/campgrounds">All Campgrounds</a> -->
 </article>

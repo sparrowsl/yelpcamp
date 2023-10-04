@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import prisma from "./prisma/prisma.js";
-import { validateCampground } from "./schemas.js";
+import { validateCampground, validateReview } from "./schemas.js";
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -32,6 +32,21 @@ app.post("/api/v1/campgrounds", validateCampground, async (req, res) => {
 	const campground = await prisma.campground.create({ data: req.body });
 
 	return res.status(201).json({ status: "success", data: { campground } });
+});
+
+app.post("/api/v1/campgrounds/:id/reviews", validateReview, async (req, res) => {
+	const review = await prisma.review.create({ data: req.body });
+
+	return res.status(201).json({ status: "success", data: { review } });
+});
+
+app.get("/api/v1/campgrounds/:id/reviews", async (req, res) => {
+	const reviews = await prisma.review.findMany({
+		where: { campground_id: req.params.id },
+		orderBy: { id: "desc" },
+	});
+
+	return res.status(201).json({ status: "success", data: { reviews } });
 });
 
 app.patch("/api/v1/campgrounds/:id", validateCampground, async (req, res) => {

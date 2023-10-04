@@ -5,6 +5,7 @@
 	export let placeholder = "";
 	export let label = "";
 	export let required = true;
+	/** @type {number|string} */
 	export let value = "";
 	/** @type {number|string} */
 	export let min = 0;
