@@ -41,12 +41,12 @@ app.post("/api/v1/campgrounds/:id/reviews", validateReview, async (req, res) => 
 });
 
 app.get("/api/v1/campgrounds/:id/reviews", async (req, res) => {
-	const reviews = await prisma.review.findMany({
-		where: { campground_id: req.params.id },
-		orderBy: { id: "desc" },
+	const campground = await prisma.campground.findUnique({
+		where: { id: req.params.id },
+		include: { reviews: true },
 	});
 
-	return res.status(201).json({ status: "success", data: { reviews } });
+	return res.status(200).json({ status: "success", data: { campground } });
 });
 
 app.patch("/api/v1/campgrounds/:id", validateCampground, async (req, res) => {

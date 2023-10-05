@@ -7,7 +7,7 @@
 
 	/** @type {import("./$types").PageData} */
 	export let data;
-	const { campground, reviews: campReviews } = data;
+	const { campground } = data;
 
 	const review = { rating: 3, body: "" };
 
@@ -68,13 +68,11 @@
 			</fieldset>
 		</form>
 
-		{#if campReviews}
+		{#if campground.reviews}
 			<ul>
-				{#await campReviews then reviews}
-					{#each reviews as review}
-						<li>{review.body}</li>
-					{/each}
-				{/await}
+				{#each campground.reviews as review (review.id)}
+					<li>{review?.body}</li>
+				{/each}
 			</ul>
 		{/if}
 	</section>

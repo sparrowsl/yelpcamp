@@ -7,7 +7,7 @@
 	export let value = "";
 </script>
 
-<label for="description" class="block">
+<label for={id || name} class="block">
 	{#if label.trim()}<span class="text-gray-600 text-sm">{label}</span>{/if}
 	<textarea
 		{name}
