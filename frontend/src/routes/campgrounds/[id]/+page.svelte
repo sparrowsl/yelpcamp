@@ -52,7 +52,7 @@
 	</figure>
 
 	<section>
-		<form action="" method="POST" on:submit|preventDefault={submitReview}>
+		<form action="" method="POST" on:submit|preventDefault={submitReview} class="mb-5">
 			<fieldset class="grid gap-4">
 				<FormInput
 					label="Rating"
@@ -69,11 +69,12 @@
 		</form>
 
 		{#if campground.reviews}
-			<ul>
-				{#each campground.reviews as review (review.id)}
-					<li>{review?.body}</li>
-				{/each}
-			</ul>
+			{#each campground.reviews as review (review.id)}
+				<div class="border p-2 rounded mb-2">
+					<h4 class="font-semibold text-gray-800">Rating: {review.rating}</h4>
+					<p class="text-sm text-gray-800">Review: {review?.body}</p>
+				</div>
+			{/each}
 		{/if}
 	</section>
 	<!-- <a href="/campgrounds">All Campgrounds</a> -->
