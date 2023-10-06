@@ -71,7 +71,13 @@
 		{#if campground.reviews}
 			{#each campground.reviews as review (review.id)}
 				<div class="border p-2 rounded mb-2">
-					<h4 class="font-semibold text-gray-800">Rating: {review.rating}</h4>
+					<h4 class="font-semibold text-gray-800 flex items-center justify-between">
+						<span>Rating: {review.rating} </span>
+						<form action="/campgrounds/{campground.id}/reviews/{review.id}" method="POST">
+							<button type="submit"><i class="i-mdi:delete text-xl text-red-500"></i></button>
+						</form>
+					</h4>
+
 					<p class="text-sm text-gray-800">Review: {review?.body}</p>
 				</div>
 			{/each}

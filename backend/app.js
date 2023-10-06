@@ -49,6 +49,12 @@ app.get("/api/v1/campgrounds/:id/reviews", async (req, res) => {
 	return res.status(200).json({ status: "success", data: { campground } });
 });
 
+app.delete("/api/v1/campgrounds/:id/reviews/:rev_id", async (req, res) => {
+	await prisma.review.delete({ where: { id: req.params.rev_id } });
+
+	return res.status(204).json({ status: "success", data: null });
+});
+
 app.patch("/api/v1/campgrounds/:id", validateCampground, async (req, res) => {
 	const campground = await prisma.campground.update({
 		data: req.body,

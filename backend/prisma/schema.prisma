@@ -51,7 +51,7 @@ model Review {
   id            String      @unique @default(cuid())
   body          String
   rating        Int
-  campground    Campground? @relation(fields: [campground_id], references: [id])
+  campground    Campground? @relation(fields: [campground_id], references: [id], onDelete: Cascade)
   campground_id String?
 
   @@index([id, rating])
