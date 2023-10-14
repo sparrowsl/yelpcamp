@@ -32,9 +32,9 @@
 
 		<figcaption class="mt-2">
 			<h1 class="font-bold text-3xl">{campground.title}</h1>
-			<p>{campground.description}</p>
 			<p class="text-gray-600 text-sm">{campground.location}</p>
 			<p class="text-sm">${campground.price}/night</p>
+			<p class="whitespace-pre-wrap">{campground.description}</p>
 
 			<div class="flex items-center gap-5 mt-4">
 				<a
