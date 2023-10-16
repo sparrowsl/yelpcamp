@@ -2,6 +2,7 @@ import express from "express";
 import bcrypt from "bcrypt";
 import prisma from "../prisma/prisma.js";
 import { validateUser } from "../schemas.js";
+import jwt from "jsonwebtoken";
 
 const router = express.Router();
 
@@ -15,8 +16,11 @@ router.post("/login", async (req, res) => {
 			return res.status(404).json({ status: "fail", message: "Invalid username and password!!" });
 		}
 
-		// TODO: return JWT
-		return res.status(201).json({ status: "success", data: { user } });
+		const token = jwt.sign({ id: user.id }, String(process.env.JWT_SECRET), {
+			expiresIn: String(process.env.JWT_EXPIRES_IN),
+		});
+
+		return res.status(201).json({ status: "success", token, data: { user } });
 	} catch (error) {
 		return res.status(400).json({ status: "fail", message: "Email might already be in use!!" });
 	}
@@ -32,7 +36,11 @@ router.post("/register", validateUser, async (req, res) => {
 			},
 		});
 
-		return res.status(201).json({ status: "success", data: { user } });
+		const token = jwt.sign({ id: user.id }, String(process.env.JWT_SECRET), {
+			expiresIn: String(process.env.JWT_EXPIRES_IN),
+		});
+
+		return res.status(201).json({ status: "success", token, data: { user } });
 	} catch (error) {
 		return res.status(400).json({ status: "fail", message: "Email might already be in use!!" });
 	}
