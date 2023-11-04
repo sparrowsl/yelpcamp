@@ -3,8 +3,7 @@ import { PUBLIC_BASE_API } from "$env/static/public";
 /** @type {import('./$types').PageLoad} */
 export async function load({ params, fetch }) {
 	const res = await fetch(`${PUBLIC_BASE_API}/campgrounds/${params.id}/reviews`);
-	// prettier-ignore
-	const { data: { campground } } = await res.json();
+	const { data } = await res.json();
 
-	return { campground };
+	return { campground: data?.campground || [] };
 }

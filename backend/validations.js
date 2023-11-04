@@ -9,7 +9,6 @@ const campgroundSchema = z.object({
 });
 
 /**
- *
  * @param {import("express").Request} req
  * @param {import("express").Response} res
  * @param {import("express").NextFunction} next
@@ -33,7 +32,6 @@ const reviewSchema = z.object({
 });
 
 /**
- *
  * @param {import("express").Request} req
  * @param {import("express").Response} res
  * @param {import("express").NextFunction} next
@@ -57,7 +55,6 @@ const userSchema = z.object({
 });
 
 /**
- *
  * @param {import("express").Request} req
  * @param {import("express").Response} res
  * @param {import("express").NextFunction} next

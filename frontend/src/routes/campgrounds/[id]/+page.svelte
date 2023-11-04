@@ -1,5 +1,5 @@
 <script>
-	import { page } from "$app/stores";
+	import { goto, invalidateAll } from "$app/navigation";
 	import { PUBLIC_BASE_API } from "$env/static/public";
 	import Button from "$lib/components/Button.svelte";
 	import FormInput from "$lib/components/FormInput.svelte";
@@ -7,7 +7,7 @@
 
 	/** @type {import("./$types").PageData} */
 	export let data;
-	const { campground } = data;
+	$: campground = data.campground;
 
 	const review = { rating: 3, body: "" };
 
@@ -18,41 +18,64 @@
 			body: JSON.stringify(review),
 		});
 
-		if (res.ok) window.location.href = $page.url.pathname;
+		if (!res.ok) return;
+
+		// Reset form
+		review.rating = 3;
+		review.body = "";
+		invalidateAll();
+	};
+
+	/** @param {string} reviewId */
+	const deleteReview = async (reviewId) => {
+		const res = await fetch(`${PUBLIC_BASE_API}/campgrounds/${campground.id}/reviews/${reviewId}`, {
+			method: "DELETE",
+		});
+
+		if (res.ok) invalidateAll();
+	};
+
+	/** @param {string} campId */
+	const deleteCampground = async (campId) => {
+		const res = await fetch(`${PUBLIC_BASE_API}/campgrounds/${campground.id}`, {
+			method: "DELETE",
+		});
+
+		if (res.ok) goto(`/campgrounds`);
 	};
 </script>
 
-<article class="max-w-5xl mx-auto grid grid-cols-2 gap-10">
+<article class="mx-auto max-w-5xl grid gap-10 grid-cols-2">
 	<figure class="">
 		<img
 			src={campground.image}
 			alt={campground.title}
-			class="h-95 object-cover object-center w-full"
+			class="object-cover object-center h-95 w-full"
 		/>
 
 		<figcaption class="mt-2">
 			<h1 class="font-bold text-3xl">{campground.title}</h1>
-			<p class="text-gray-600 text-sm">{campground.location}</p>
+			<p class="text-sm text-gray-600">{campground.location}</p>
 			<p class="text-sm">${campground.price}/night</p>
 			<p class="whitespace-pre-wrap">{campground.description}</p>
 
-			<div class="flex items-center gap-5 mt-4">
+			<div class="flex mt-4 gap-5 items-center">
 				<a
 					href="/campgrounds/{campground.id}/edit"
-					class="text-xs bg-blue-600 text-white px-4 py-2 rounded"
+					class="rounded bg-blue-600 text-xs text-white py-2 px-4"
 				>
 					Edit
 				</a>
 
-				<form action="/campgrounds/{campground.id}/delete" method="POST">
-					<Button class="text-xs bg-red-500">Delete</Button>
+				<form method="POST" on:submit|preventDefault={() => deleteCampground(campground.id)}>
+					<Button class="bg-red-500 text-xs">Delete</Button>
 				</form>
 			</div>
 		</figcaption>
 	</figure>
 
 	<section>
-		<form action="" method="POST" on:submit|preventDefault={submitReview} class="mb-5">
+		<form method="POST" on:submit|preventDefault={submitReview} class="mb-5">
 			<fieldset class="grid gap-4">
 				<FormInput
 					label="Rating"
@@ -64,24 +87,22 @@
 				/>
 				<Textarea label="Review" name="body" class="text-gray-600" bind:value={review.body} />
 
-				<Button class="w-fit bg-teal-700">Submit Review</Button>
+				<Button class="bg-teal-700 w-fit">Submit Review</Button>
 			</fieldset>
 		</form>
 
-		{#if campground.reviews}
-			{#each campground.reviews as review (review.id)}
-				<div class="border p-2 rounded mb-2">
-					<h4 class="font-semibold text-gray-800 flex items-center justify-between">
-						<span>Rating: {review.rating} </span>
-						<form action="/campgrounds/{campground.id}/reviews/{review.id}" method="POST">
-							<button type="submit"><i class="i-mdi:delete text-xl text-red-500"></i></button>
-						</form>
-					</h4>
+		{#each campground?.reviews as review (review.id)}
+			<div class="border rounded mb-2 p-2">
+				<h4 class="flex font-semibold text-gray-800 items-center justify-between">
+					<span>Rating: {review.rating} </span>
+					<form method="POST" on:submit|preventDefault={() => deleteReview(review.id)}>
+						<button type="submit"><i class="text-xl text-red-500 i-mdi:delete"></i></button>
+					</form>
+				</h4>
 
-					<p class="text-sm text-gray-800">Review: {review?.body}</p>
-				</div>
-			{/each}
-		{/if}
+				<p class="text-sm text-gray-800">Review: {review?.body}</p>
+			</div>
+		{/each}
 	</section>
 	<!-- <a href="/campgrounds">All Campgrounds</a> -->
 </article>
