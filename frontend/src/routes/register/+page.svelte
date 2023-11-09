@@ -1,4 +1,5 @@
 <script>
+	import Cookies from "js-cookie";
 	import { goto } from "$app/navigation";
 	import { PUBLIC_BASE_API } from "$env/static/public";
 	import FormInput from "$lib/components/FormInput.svelte";
@@ -14,8 +15,10 @@
 		});
 		if (!res.ok) return;
 
-		const data = await res.json();
+		const { data, token } = await res.json();
 		console.log(data);
+		Cookies.set("token", token);
+
 		// goto(`/campgrounds/${camp.id}`);
 	}
 </script>

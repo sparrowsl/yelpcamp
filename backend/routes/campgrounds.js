@@ -1,10 +1,11 @@
 import express from "express";
 import prisma from "../prisma/prisma.js";
 import { validateCampground } from "../validations.js";
+import { checkIsAuthenticated } from "./users.js";
 
 const router = express.Router();
 
-router.get("/", async (req, res) => {
+router.get("/", checkIsAuthenticated, async (req, res) => {
 	const campgrounds = (await prisma.campground.findMany()).flat();
 
 	return res.status(200).json({ result: campgrounds.length, data: { campgrounds } });

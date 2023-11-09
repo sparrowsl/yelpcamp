@@ -6,24 +6,37 @@ import { signToken } from "../utils.js";
 
 const router = express.Router();
 
-router.post("/login", async (req, res) => {
-	const { username, password } = req.body;
-	if (!username.trim() || !password.trim()) {
-		return res.status(400).json({ message: "Please provide email and password!!" });
-	}
+/**
+ * @param {import("express").Request} req
+ * @param {import("express").Response} res
+ * @param {import("express").NextFunction} next
+ * @returns
+ */
+export const checkIsAuthenticated = (req, res, next) => {
+	try {
+		// TODO: check request for token
+		console.log(req.headers);
 
+		// TODO: verify request token
+		next();
+	} catch (e) {
+		return res.status(403).json({ message: "You must be logged in to access endpoint!" });
+	}
+};
+
+router.post("/login", async (req, res) => {
 	try {
 		const user = await prisma.user.findUnique({
 			where: { username: req.body.username },
 		});
 
 		if (!user || !(await bcrypt.compare(req.body.password, user?.password))) {
-			return res.status(401).json({ message: "Invalid username and password!!" });
+			return res.status(400).json({ message: "Invalid username and password!!" });
 		}
 
 		const token = signToken({ id: user.id });
 		const { password, ...rest } = user;
-		return res.status(201).json({ token, data: { user: rest } });
+		return res.status(200).json({ token, data: { user: rest } });
 	} catch (error) {
 		return res.status(400).json({ message: "Invalid username and password!!" });
 	}
