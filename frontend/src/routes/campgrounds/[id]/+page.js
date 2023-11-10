@@ -7,5 +7,8 @@ export async function load({ params, fetch }) {
 	const res = await fetch(`${PUBLIC_BASE_API}/campgrounds/${params.id}/reviews`);
 	const { data } = await res.json();
 
-	return { campground: data?.campground || [] };
+	return {
+		/** @type {import("$lib/types.js").Campground} */
+		campground: data?.campground || [],
+	};
 }

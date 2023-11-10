@@ -1,5 +1,6 @@
 import express from "express";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 import prisma from "../prisma/prisma.js";
 import { validateUser } from "../validations.js";
 import { signToken } from "../utils.js";
@@ -12,12 +13,18 @@ const router = express.Router();
  * @param {import("express").NextFunction} next
  * @returns
  */
-export const checkIsAuthenticated = (req, res, next) => {
+export const verifyAuthToken = (req, res, next) => {
+	let token = "";
 	try {
-		// TODO: check request for token
-		console.log(req.headers);
+		if (req.headers?.authorization && req.headers?.authorization.startsWith("Bearer")) {
+			token = req.headers?.authorization.split(" ")[1];
+		}
 
-		// TODO: verify request token
+		const verified = jwt.verify(token, String(process.env.JWT_SECRET));
+		if (!verified) return res.status(403).json({ message: "Invalid token" });
+
+		// @ts-ignore
+		req.user = verified;
 		next();
 	} catch (e) {
 		return res.status(403).json({ message: "You must be logged in to access endpoint!" });

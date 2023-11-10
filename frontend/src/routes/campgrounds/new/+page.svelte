@@ -4,13 +4,14 @@
 	import FormInput from "$lib/components/FormInput.svelte";
 	import Button from "$lib/components/Button.svelte";
 	import Textarea from "$lib/components/Textarea.svelte";
+	import { token } from "$lib/token.js";
 
 	const campground = { title: "", location: "", image: "", description: "", price: undefined };
 
 	async function createCampground() {
 		const res = await fetch(`${PUBLIC_BASE_API}/campgrounds`, {
 			method: "POST",
-			headers: { "Content-Type": "application/json" },
+			headers: { "Content-Type": "application/json", Authorization: `Bearer ${$token}` },
 			body: JSON.stringify(campground),
 		});
 		if (!res.ok) return;
@@ -21,8 +22,8 @@
 	}
 </script>
 
-<section class="max-w-2xl mx-auto">
-	<h1 class="text-3xl font-bold text-center">New Campground</h1>
+<section class="mx-auto max-w-2xl">
+	<h1 class="font-bold text-center text-3xl">New Campground</h1>
 
 	<form action="" method="POST" on:submit|preventDefault={createCampground} class="">
 		<fieldset class="grid gap-4">
@@ -53,6 +54,6 @@
 			<Button class="w-fit">Add Campground</Button>
 		</fieldset>
 
-		<a href="/campgrounds" class="block mt-3 text-blue-500 underline">all campgrounds</a>
+		<a href="/campgrounds" class="mt-3 text-blue-500 block underline">all campgrounds</a>
 	</form>
 </section>

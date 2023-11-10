@@ -8,13 +8,11 @@ datasource db {
 }
 
 model User {
-  id       String @unique @default(cuid())
-  username String @unique
-  email    String @unique
-  password String
-
-  @@index([id, email])
-  @@map("user")
+  id          String       @unique @default(cuid())
+  username    String       @unique
+  email       String       @unique
+  password    String
+  campgrounds Campground[]
 }
 
 model Campground {
@@ -25,9 +23,8 @@ model Campground {
   price       Int
   description String
   reviews     Review[]
-
-  @@index([id])
-  @@map("campground")
+  user        User?    @relation(fields: [user_id], references: [id])
+  user_id     String?
 }
 
 model Review {
@@ -36,7 +33,4 @@ model Review {
   rating        Int
   campground    Campground? @relation(fields: [campground_id], references: [id], onDelete: Cascade)
   campground_id String?
-
-  @@index([id, rating])
-  @@map("review")
 }

@@ -16,15 +16,14 @@
 		if (!res.ok) return;
 
 		const { data, token } = await res.json();
-		console.log(data);
 		Cookies.set("token", token);
-
-		// goto(`/campgrounds/${camp.id}`);
+		Cookies.set("user", JSON.stringify(data.user));
+		goto("/campgrounds", { invalidateAll: true });
 	}
 </script>
 
-<section class="max-w-2xl mx-auto">
-	<h1 class="text-3xl font-bold text-center">Register</h1>
+<section class="mx-auto max-w-2xl">
+	<h1 class="font-bold text-center text-3xl">Register</h1>
 
 	<form action="" method="POST" on:submit|preventDefault={registerUser} class="">
 		<fieldset class="grid gap-4">

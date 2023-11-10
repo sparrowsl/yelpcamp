@@ -1,12 +1,12 @@
 import express from "express";
 import prisma from "../prisma/prisma.js";
 import { validateCampground } from "../validations.js";
-import { checkIsAuthenticated } from "./users.js";
+import { verifyAuthToken } from "./users.js";
 
 const router = express.Router();
 
-router.get("/", checkIsAuthenticated, async (req, res) => {
-	const campgrounds = (await prisma.campground.findMany()).flat();
+router.get("/", async (req, res) => {
+	const campgrounds = (await prisma.campground.findMany({ orderBy: { id: "desc" } })).flat();
 
 	return res.status(200).json({ result: campgrounds.length, data: { campgrounds } });
 });
@@ -14,6 +14,14 @@ router.get("/", checkIsAuthenticated, async (req, res) => {
 router.get("/:id", async (req, res) => {
 	const campground = await prisma.campground.findUnique({
 		where: { id: req.params.id },
+		include: {
+			user: {
+				select: {
+					id: true,
+					username: true,
+				},
+			},
+		},
 	});
 
 	if (!campground) return res.status(404).json({ message: "Campground not found!!" });
@@ -21,13 +29,15 @@ router.get("/:id", async (req, res) => {
 	return res.status(200).json({ data: { campground } });
 });
 
-router.post("/", validateCampground, async (req, res) => {
-	const campground = await prisma.campground.create({ data: req.body });
+router.post("/", verifyAuthToken, validateCampground, async (req, res) => {
+	const campground = await prisma.campground.create({
+		data: { ...req.body, user_id: req.user?.id },
+	});
 
 	return res.status(201).json({ data: { campground } });
 });
 
-router.patch("/:id", validateCampground, async (req, res) => {
+router.patch("/:id", verifyAuthToken, validateCampground, async (req, res) => {
 	const campground = await prisma.campground.update({
 		data: req.body,
 		where: { id: req.params.id },
@@ -36,7 +46,7 @@ router.patch("/:id", validateCampground, async (req, res) => {
 	return res.status(200).json({ data: { campground } });
 });
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", verifyAuthToken, async (req, res) => {
 	const campground = await prisma.campground.delete({
 		where: { id: req.params.id },
 	});

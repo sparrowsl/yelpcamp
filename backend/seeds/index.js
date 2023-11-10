@@ -18,6 +18,7 @@ const randomItem = (/** @type {string[]} */ array) =>
 				location: `${cities[randomIndex].city} ${cities[randomIndex].state}`,
 				title: `${randomItem(descriptors)} ${randomItem(places)}`,
 				image: "https://source.unsplash.com/random/?campground",
+				user_id: "clos2vpm400009w4fern2wudi",
 			},
 		});
 	}
