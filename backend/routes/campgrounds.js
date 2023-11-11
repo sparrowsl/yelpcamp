@@ -1,6 +1,6 @@
 import express from "express";
 import prisma from "../prisma/prisma.js";
-import { validateCampground, verifyAuthToken } from "../middleware.js";
+import { validateCampground, verifyAuthToken, verifyCampgroundAccess } from "../middleware.js";
 
 const router = express.Router();
 
@@ -37,16 +37,22 @@ router.post("/", verifyAuthToken, validateCampground, async (req, res) => {
 	return res.status(201).json({ data: { campground } });
 });
 
-router.patch("/:id", verifyAuthToken, validateCampground, async (req, res) => {
-	const campground = await prisma.campground.update({
-		data: req.body,
-		where: { id: req.params.id },
-	});
+router.patch(
+	"/:id",
+	verifyAuthToken,
+	verifyCampgroundAccess,
+	validateCampground,
+	async (req, res) => {
+		const campground = await prisma.campground.update({
+			data: req.body,
+			where: { id: req.params.id },
+		});
 
-	return res.status(200).json({ data: { campground } });
-});
+		return res.status(200).json({ data: { campground } });
+	}
+);
 
-router.delete("/:id", verifyAuthToken, async (req, res) => {
+router.delete("/:id", verifyAuthToken, verifyCampgroundAccess, async (req, res) => {
 	const campground = await prisma.campground.delete({
 		where: { id: req.params.id },
 	});

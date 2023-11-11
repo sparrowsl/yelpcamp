@@ -29,11 +29,11 @@ model Campground {
 }
 
 model Review {
-  id            String      @unique @default(cuid())
+  id            String     @unique @default(cuid())
   body          String
   rating        Int
-  campground    Campground? @relation(fields: [campground_id], references: [id], onDelete: Cascade)
-  campground_id String?
-  user          User        @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  campground    Campground @relation(fields: [campground_id], references: [id], onDelete: Cascade)
+  campground_id String
+  user          User       @relation(fields: [user_id], references: [id], onDelete: Cascade)
   user_id       String
 }

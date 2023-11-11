@@ -10,9 +10,9 @@ export async function load({ params, fetch }) {
 	const { data } = await res.json();
 
 	// Check if the user has access to edit
-	if (getCurrentUser() !== data?.campground.user_id) {
+	if (getCurrentUser().id !== data?.campground.user_id) {
 		throw redirect(302, `/campgrounds/${params.id}`);
 	}
 
-	return { campground: data?.campground || [] };
+	return { campground: data?.campground || {} };
 }

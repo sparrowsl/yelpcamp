@@ -13,6 +13,7 @@
 	const deleteCampground = async (campId) => {
 		const res = await fetch(`${PUBLIC_BASE_API}/campgrounds/${campId}`, {
 			method: "DELETE",
+			headers: { Authorization: `Bearer ${$token}` },
 		});
 
 		if (res.ok) goto(`/campgrounds`);

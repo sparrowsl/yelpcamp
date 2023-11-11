@@ -4,6 +4,7 @@
 	import Button from "$lib/components/Button.svelte";
 	import FormInput from "$lib/components/FormInput.svelte";
 	import Textarea from "$lib/components/Textarea.svelte";
+	import { token } from "$lib/token.js";
 
 	/** @type {import("./$types").PageData} */
 	export let data;
@@ -11,7 +12,10 @@
 	async function updateCampground() {
 		const res = await fetch(`${PUBLIC_BASE_API}/campgrounds/${data.campground.id}`, {
 			method: "PATCH",
-			headers: { "Content-Type": "application/json;charset=utf-8" },
+			headers: {
+				"Content-Type": "application/json;charset=utf-8",
+				Authorization: `Bearer ${$token}`,
+			},
 			body: JSON.stringify(data.campground),
 		});
 
@@ -20,8 +24,8 @@
 	}
 </script>
 
-<section class="max-w-3xl mx-auto">
-	<h1 class="text-2xl font-bold text-center">Edit Campground</h1>
+<section class="mx-auto max-w-3xl">
+	<h1 class="font-bold text-center text-2xl">Edit Campground</h1>
 
 	<form action="" method="POST" on:submit|preventDefault={updateCampground}>
 		<fieldset class="grid gap-4">
@@ -53,5 +57,5 @@
 		</fieldset>
 	</form>
 
-	<a href="/campgrounds" class="block text-blue-600 underline mt-5 w-fit">back to Campgrounds...</a>
+	<a href="/campgrounds" class="mt-5 w-fit text-blue-600 block underline">back to Campgrounds...</a>
 </section>

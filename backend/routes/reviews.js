@@ -1,6 +1,6 @@
 import express from "express";
 import prisma from "../prisma/prisma.js";
-import { validateReview, verifyAuthToken, verifyUserAccess } from "../middleware.js";
+import { validateReview, verifyAuthToken, verifyReviewAccess } from "../middleware.js";
 
 const router = express.Router({ mergeParams: true });
 
@@ -30,7 +30,7 @@ router.post("/", verifyAuthToken, validateReview, async (req, res) => {
 	return res.status(201).json({ data: { review } });
 });
 
-router.delete("/:rev_id", verifyAuthToken, verifyUserAccess, async (req, res) => {
+router.delete("/:rev_id", verifyAuthToken, verifyReviewAccess, async (req, res) => {
 	await prisma.review.delete({ where: { id: req.params.rev_id } });
 
 	return res.status(204).json({ data: null });

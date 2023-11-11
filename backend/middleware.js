@@ -11,7 +11,7 @@ import prisma from "./prisma/prisma.js";
 export const verifyAuthToken = (req, res, next) => {
 	let token = "";
 	try {
-		if (req.headers?.authorization && req.headers?.authorization.startsWith("Bearer")) {
+		if (req.headers?.authorization && req.headers?.authorization?.startsWith("Bearer")) {
 			token = req.headers?.authorization.split(" ")[1];
 		}
 
@@ -32,7 +32,7 @@ export const verifyAuthToken = (req, res, next) => {
  * @param {import("express").NextFunction} next
  * @returns
  */
-export const verifyUserAccess = async (req, res, next) => {
+export const verifyReviewAccess = async (req, res, next) => {
 	try {
 		const review = await prisma.review.findUnique({
 			where: { id: req?.params?.rev_id },
@@ -41,6 +41,30 @@ export const verifyUserAccess = async (req, res, next) => {
 
 		// @ts-ignore
 		if (!review || review?.user_id !== req?.user?.id) {
+			return res.status(403).json({ message: "Invalid access" });
+		}
+
+		next();
+	} catch (e) {
+		return res.status(401).json({ message: "You don't have access for this operation!" });
+	}
+};
+
+/**
+ * @param {import("express").Request} req
+ * @param {import("express").Response} res
+ * @param {import("express").NextFunction} next
+ * @returns
+ */
+export const verifyCampgroundAccess = async (req, res, next) => {
+	try {
+		const campground = await prisma.campground.findUnique({
+			where: { id: req.params?.id },
+			select: { user_id: true },
+		});
+
+		// @ts-ignore
+		if (!campground || campground?.user_id !== req?.user?.id) {
 			return res.status(403).json({ message: "Invalid access" });
 		}
 
