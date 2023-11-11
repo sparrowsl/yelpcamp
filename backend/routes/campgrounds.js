@@ -1,7 +1,6 @@
 import express from "express";
 import prisma from "../prisma/prisma.js";
-import { validateCampground } from "../validations.js";
-import { verifyAuthToken } from "./users.js";
+import { validateCampground, verifyAuthToken } from "../middleware.js";
 
 const router = express.Router();
 
@@ -31,6 +30,7 @@ router.get("/:id", async (req, res) => {
 
 router.post("/", verifyAuthToken, validateCampground, async (req, res) => {
 	const campground = await prisma.campground.create({
+		// @ts-ignore
 		data: { ...req.body, user_id: req.user?.id },
 	});
 

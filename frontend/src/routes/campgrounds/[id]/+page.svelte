@@ -17,9 +17,6 @@
 
 		if (res.ok) goto(`/campgrounds`);
 	};
-
-	console.log(getCurrentUser());
-	$: console.log(campground);
 </script>
 
 <article class="mx-auto max-w-5xl grid gap-10 grid-cols-2">
