@@ -35,7 +35,7 @@
 			<p class="text-sm">${campground.price}/night</p>
 			<p class="whitespace-pre-wrap">{campground.description}</p>
 
-			{#if $token && campground.user_id === getCurrentUser().id}
+			{#if $token && campground?.user_id === getCurrentUser()?.id}
 				<div class="flex mt-4 gap-5 items-center">
 					<a
 						href="/campgrounds/{campground.id}/edit"

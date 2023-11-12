@@ -31,28 +31,9 @@
 		<fieldset class="grid gap-4">
 			<FormInput label="Title" name="title" bind:value={data.campground.title} />
 			<FormInput label="Location" name="location" bind:value={data.campground.location} />
-			<FormInput
-				type="number"
-				label="Price"
-				id="price"
-				name="price"
-				bind:value={data.campground.price}
-			/>
-			<FormInput
-				type="url"
-				label="Image URL"
-				id="image"
-				name="image"
-				bind:value={data.campground.image}
-			/>
-
-			<Textarea
-				label="Description"
-				name="description"
-				id="description"
-				bind:value={data.campground.description}
-			/>
-
+			<FormInput type="number" label="Price" name="price" bind:value={data.campground.price} />
+			<FormInput type="url" label="Image URL" name="image" bind:value={data.campground.image} />
+			<Textarea label="Description" name="description" bind:value={data.campground.description} />
 			<Button class="w-fit">Update Campground</Button>
 		</fieldset>
 	</form>

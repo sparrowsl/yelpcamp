@@ -9,6 +9,6 @@ export async function load({ params, fetch }) {
 
 	return {
 		/** @type {import("$lib/types.js").Campground} */
-		campground: data?.campground || [],
+		campground: data?.campground || {},
 	};
 }

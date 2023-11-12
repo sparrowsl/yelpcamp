@@ -23,4 +23,6 @@ export interface Review {
 	rating?: number;
 	campground?: Campground;
 	campground_id?: string;
+	user?: User;
+	user_id?: string;
 }

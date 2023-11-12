@@ -25,32 +25,13 @@
 <section class="mx-auto max-w-2xl">
 	<h1 class="font-bold text-center text-3xl">New Campground</h1>
 
-	<form action="" method="POST" on:submit|preventDefault={createCampground} class="">
+	<form method="POST" on:submit|preventDefault={createCampground} enctype="multipart/form-data">
 		<fieldset class="grid gap-4">
 			<FormInput label="Title" id="title" name="title" bind:value={campground.title} />
 			<FormInput label="Location" id="location" name="location" bind:value={campground.location} />
-			<FormInput
-				type="number"
-				label="Price"
-				id="price"
-				name="price"
-				bind:value={campground.price}
-			/>
-			<FormInput
-				type="url"
-				label="Image URL"
-				id="image"
-				name="image"
-				bind:value={campground.image}
-			/>
-
-			<Textarea
-				label="Description"
-				name="description"
-				id="description"
-				bind:value={campground.description}
-			/>
-
+			<FormInput type="number" label="Price" name="price" bind:value={campground.price} />
+			<FormInput type="url" label="Image URL" name="image" bind:value={campground.image} />
+			<Textarea label="Description" name="description" bind:value={campground.description} />
 			<Button class="w-fit">Add Campground</Button>
 		</fieldset>
 

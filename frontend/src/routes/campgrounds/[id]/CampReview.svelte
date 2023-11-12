@@ -72,6 +72,7 @@
 					</form>
 				{/if}
 			</h4>
+			<p class="text-sm mb-2 text-gray-600 italic">by {review.user?.username}</p>
 
 			<p class="text-sm text-gray-800">Review: {review?.body}</p>
 		</div>

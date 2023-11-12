@@ -11,6 +11,14 @@ router.get("/", async (req, res) => {
 		include: {
 			reviews: {
 				orderBy: { id: "desc" },
+				include: {
+					user: {
+						select: {
+							id: true,
+							username: true,
+						},
+					},
+				},
 			},
 			user: {
 				select: {
