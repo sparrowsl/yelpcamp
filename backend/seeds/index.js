@@ -1,6 +1,8 @@
+import fs from "fs";
 import prisma from "../prisma/prisma.js";
-import cities from "./cities.js";
 import { descriptors, places } from "./helpers.js";
+
+const cities = JSON.parse(String(fs.readFileSync("./cities.json")));
 
 const randomItem = (/** @type {string[]} */ array) =>
 	array[Math.floor(Math.random() * array.length)];
